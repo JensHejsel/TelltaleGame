@@ -1,4 +1,4 @@
-package GameManager;
+package Game;
 
 import javax.swing.*;
 
