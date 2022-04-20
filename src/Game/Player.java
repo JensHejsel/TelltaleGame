@@ -1,4 +1,4 @@
-package GameManager;
+package Game;
 
 public class Player {
 }
