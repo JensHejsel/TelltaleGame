@@ -6,9 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameManager extends JFrame implements ActionListener{
-    public static void main(String[] args) { createAndShow(); }
-    private static void createAndShow() {
+public class GameManager {
+    public static void main(String[] args) { GameManager manager = new GameManager(); }
+    public GameManager() {
 
         //Create and set up the window.
         JFrame frame = new JFrame("HelloWorldSwing");
@@ -26,11 +26,6 @@ public class GameManager extends JFrame implements ActionListener{
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
     }
 }
