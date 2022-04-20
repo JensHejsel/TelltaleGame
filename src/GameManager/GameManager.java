@@ -23,7 +23,7 @@ public class GameManager {
     																	"NAME havde jordens største @%#",
     																	"NAME tog altid sit sværd med sig fordi den ofte manglede @%#",
     																	"NAME glemte altid sin @%# når NAME skulle på tur",
-    																	""));
+    																	"NAME fik tit at vide NAME var god til at @%#"));
     public static void main(String[] args){
         createAndShow();
     }
