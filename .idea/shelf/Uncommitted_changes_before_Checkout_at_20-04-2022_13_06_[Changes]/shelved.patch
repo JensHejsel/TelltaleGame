@@ -1,0 +1,35 @@
+Index: src/GameManager/GameManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GameManager;\r\n\r\nimport javax.swing.*;\r\n\r\npublic class GameManager {\r\n    private JButton button1;\r\n    private JTextField TextField;\r\n\r\n    public static void main(String[] args){\r\n        createAndShow();\r\n    }\r\n    private static void createAndShow() {\r\n        JFrame mainFrame = new JFrame(\"Telltale Game\");\r\n\r\n        mainFrame.setSize(500, 400);\r\n        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        mainFrame.setLocationRelativeTo(null);\r\n        mainFrame.setResizable(false);\r\n        mainFrame.setVisible(true);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/GameManager/GameManager.java b/src/GameManager/GameManager.java
+--- a/src/GameManager/GameManager.java	(revision 98624fb1e0024038644fd9975d03b830071fb27c)
++++ b/src/GameManager/GameManager.java	(date 1650452729568)
+@@ -1,21 +1,16 @@
+ package GameManager;
+ 
++import javax.accessibility.Accessible;
+ import javax.swing.*;
++import java.awt.*;
+ 
+-public class GameManager {
++public class GameManager extends AbstractButton implements Accessible {
+     private JButton button1;
+     private JTextField TextField;
+ 
+     public static void main(String[] args){
+         createAndShow();
+     }
+-    private static void createAndShow() {
+-        JFrame mainFrame = new JFrame("Telltale Game");
+ 
+-        mainFrame.setSize(500, 400);
+-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        mainFrame.setLocationRelativeTo(null);
+-        mainFrame.setResizable(false);
+-        mainFrame.setVisible(true);
+     }
+ }
