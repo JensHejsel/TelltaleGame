@@ -26,6 +26,6 @@ public class GameManager {
         frame.add(panel);
         frame.pack();
         frame.setVisible(true);
-
+        //Hej jens
     }
 }
