@@ -26,6 +26,6 @@ public class GameManager {
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
-
+        // dillermand
     }
 }
