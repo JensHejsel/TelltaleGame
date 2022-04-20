@@ -13,8 +13,6 @@ public class GameManager extends JFrame implements ActionListener{
         JFrame frame = new JFrame("HelloWorldSwing");
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,10,300));
-        mainPanel.setLocation(50,50);
-        mainPanel.setPreferredSize(new Dimension(50,50));
         mainPanel.setBackground(Color.black);
 
         frame.setMinimumSize(new Dimension(1000, 1000));
@@ -22,7 +20,6 @@ public class GameManager extends JFrame implements ActionListener{
 
         JButton hostButton = new JButton("Host Game");
         JButton joinButton = new JButton("Join Game");
-        hostButton.setAlignmentY(50);
         mainPanel.add(hostButton);
         mainPanel.add(joinButton);
         frame.add(mainPanel);
