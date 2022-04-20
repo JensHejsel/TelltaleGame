@@ -6,11 +6,12 @@ import java.util.Arrays;
 
 public class StoryController {
 	private Random randGene = new Random();
-	
+	private String currentStory = "";
+	private String currentLine ="";
 	private int storyState = 0; 
 	private String name = "Jens";
     private String lokation = "Din mor";
-    
+    private String enemy = "Pikachu";
     ArrayList<String> firstPart = new ArrayList<String>(Arrays.asList("Der var engang en dreng som hed @%#", 
     																  "Nu skal i hører historien om @%# som var en papegøje", 
     																  "Der var engang en moden kvinde kendt som @%#",
@@ -34,10 +35,15 @@ public class StoryController {
     ArrayList<String> fourthPart = new ArrayList<String>(Arrays.asList("Da NAME ankom til LOKATION skete det utænkelige hans @%# eksploderede",
 																		"NAME fløj hen over LOKATION, da NAME så hvad hvordan stedet var blevet @%# blev NAME chokeret",
 																		"NAME opdagede hvor utroligt @%# LOKATION var blevet",
-																		"",
-																		""));
-    ArrayList<String> fifthPart = new ArrayList<String>(Arrays.asList(""));
-    ArrayList<String> sixthPart = new ArrayList<String>(Arrays.asList(""));
+																		"NAME havde aldrig set noget så @%#  som LOKATION, NAME begyndte at græde"));
+    ArrayList<String> fifthPart = new ArrayList<String>(Arrays.asList("Pludeseligt opdagede NAME noget bag buskene bag træet det lignede en @%# ",
+    																	"Der lød et skrig, pludseligt fløj @%# hen over hovede på NAME",
+    																	"Det buldrede kraftigt da @%# kom løbende mod NAME",
+    																	"Skyerne sortnede og med et stod der en @%# foran NAME", 
+    																	"Det pudslede i græsset, og NAME så en @%# komme krybende"));
+    ArrayList<String> sixthPart = new ArrayList<String>(Arrays.asList("ENEMY trak en @%# og begyndte at tæske NAME", 
+    																	"NAME kærtegnede blidt ENEMY, men pludseligt sprang ENEMY op og bed NAME",
+    																	"NAME blev bange da ENEMY begyndte at @%# ham	"));
     ArrayList<String> seventhPart = new ArrayList<String>(Arrays.asList(""));
     ArrayList<String> eightthPart = new ArrayList<String>(Arrays.asList(""));
     ArrayList<String> ninethPart = new ArrayList<String>(Arrays.asList(""));
@@ -84,6 +90,26 @@ public class StoryController {
     	returnString.replaceAll("@%#", "__________");
     	returnString.replaceAll("NAME", name);
     	returnString.replaceAll("LOKATION", lokation);
+    	returnString.replaceAll("ENEMY", enemy);
+    	currentLine = returnString;
     	return returnString;
+    }
+    public void setVotedAnswer(String answer) {
+    	currentLine.replaceAll("__________",answer);
+    	currentStory += currentLine;
+    	switch(storyState) {
+	    	case 1:
+	    		name = answer;
+	    		break;
+	    	case 3:
+	    		lokation = answer;
+	    		break;
+	    	case 5:
+	    		enemy = answer;
+	    		break;
+    	}	
+    }
+    public String getFullStory() {
+    	return currentStory;
     }
 }
