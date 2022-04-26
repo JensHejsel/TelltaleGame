@@ -8,8 +8,11 @@ public class Player {
     String currentAnswer;
     String username;
 
+    int points = 0;
+
     public Player(String username) {
         this.username = username;
+        this.points = 0;
     }
     public String getUsername(){
         return username;
@@ -28,5 +31,8 @@ public class Player {
     }
     public String getCurrentVote(){
         return currentVote;
+    }
+    public void awardWinner(){
+        this.points++;
     }
 }

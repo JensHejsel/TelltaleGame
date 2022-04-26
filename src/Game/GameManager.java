@@ -294,7 +294,9 @@ public class GameManager {
         seeWinnerOfThisRound.addActionListener(e -> {
             //start nyt vindue
             Player winner = findWinner();
-            
+            hostRoundWinnerWindow(winner);
+            for (PlayerHandler player : players)
+                player.getOut().println("winnerround:"+winner.getUsername()+winner.getCurrentAnswer());
         });
         hostFrame.add(seeWinnerOfThisRound);
         hostFrame.add(gamePanel);
@@ -313,6 +315,33 @@ public class GameManager {
             gamePanel.add(button);
             button.addActionListener(e->  joinVoteInput(button) );
         }
+        joinFrame.add(gamePanel);
+        joinFrame.revalidate();
+        joinFrame.repaint();
+    }
+
+    private void hostRoundWinnerWindow(Player winner){
+        hostFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        hostFrame.setMinimumSize(new Dimension(1000, 1000));
+        JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winner.getUsername()+" with the answer: " + winner.currentAnswer);
+        gamePanel.add(winnerAnnouncer);
+        JButton startNextRound = new JButton("Start næste runde");
+        startNextRound.addActionListener(e -> {
+            //start nyt vindue
+
+        });
+        hostFrame.add(startNextRound);
+        hostFrame.add(gamePanel);
+        hostFrame.revalidate();
+        hostFrame.repaint();
+    }
+    public void joinRoundWinnerWindow(String winnerUsername, String winnerAnswer){
+        joinFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        joinFrame.setMinimumSize(new Dimension(1000, 1000));
+        JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winnerUsername+" with the answer: " + winnerAnswer);
+        gamePanel.add(winnerAnnouncer);
         joinFrame.add(gamePanel);
         joinFrame.revalidate();
         joinFrame.repaint();
@@ -357,6 +386,10 @@ public class GameManager {
         if(currentVotes > votesForRightAnswer){
             winner = hostPlayer;
         }
+        storyController.setWinningAnswer(winner.currentAnswer);
+        for(PlayerHandler player : players)
+            player.getOut().println("winningAnswer:"+ winner.getCurrentAnswer());
+        winner.awardWinner();
         return winner;
 
     }

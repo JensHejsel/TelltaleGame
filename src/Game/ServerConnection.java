@@ -41,6 +41,13 @@ public class ServerConnection implements Runnable {
                     else if (input.startsWith("startvoting")) {
                         gameManager.joinVotingWindow(input.replace("startvoting:", ""));
                     }
+                    else if (input.startsWith("winningAnswer")) {
+                        gameManager.storyController.setWinningAnswer(input.replace("winningAnswer:",""));
+                    }
+                    else if(input.startsWith("winnerround")){
+                        String[] inputSplit = input.split(":",0);
+                        gameManager.joinRoundWinnerWindow(inputSplit[1],inputSplit[2]);
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
