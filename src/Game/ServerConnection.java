@@ -8,13 +8,15 @@ import java.net.Socket;
 
 public class ServerConnection implements Runnable {
 
+    GameManager gameManager;
     String username;
     private String nextLine;
     private Socket server;
     private BufferedReader in;
     private PrintWriter out;
 
-    public ServerConnection(Socket server, String username) throws IOException {
+    public ServerConnection(Socket server, String username, GameManager gameManager) throws IOException {
+        this.gameManager = gameManager;
         this.server = server;
         this.username = username;
         in = new BufferedReader(new InputStreamReader(server.getInputStream()));
@@ -32,7 +34,7 @@ public class ServerConnection implements Runnable {
                         nextLine = input.split(":",0)[1];
                     }
                     else if (input == "startgame") {
-
+                        gameManager.joinGameWindow();
                     }
                 }
             } catch (IOException e) {

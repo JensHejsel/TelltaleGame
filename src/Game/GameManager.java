@@ -220,7 +220,7 @@ public class GameManager {
             //int portNumber = Integer.parseInt(port.getText());
             //String iPAddress = iP.getText();
             Socket con = new Socket(iP.getText(), 5000);
-            serverConn = new ServerConnection(con, username.getText());
+            serverConn = new ServerConnection(con, username.getText(), this);
 
             new Thread(serverConn).start();
 
