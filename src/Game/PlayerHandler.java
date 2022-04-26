@@ -26,6 +26,7 @@ public class PlayerHandler implements Runnable {
             while (true) {
                 String input = in.readLine();
 
+
                 if (input.startsWith("username: ")) {
                     gameManager.displayConnectedUsers(input.split(": ", 0)[1]);
                 }

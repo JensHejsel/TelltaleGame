@@ -23,7 +23,8 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
 
-        out.print("username: " + player.getUsername());
+        out.println("username: " + player.getUsername());
+
         while (true) {
 
 

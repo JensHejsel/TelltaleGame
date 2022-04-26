@@ -203,9 +203,8 @@ public class GameManager {
         try {
             //int portNumber = Integer.parseInt(port.getText());
             //String iPAddress = iP.getText();
-            Socket con = new Socket("172.31.147.101", 5000);
+            Socket con = new Socket(iP.getText(), 5000);
             ServerConnection serverConn = new ServerConnection(con, new Player(username.getText()));
-
             new Thread(serverConn).start();
 
         } catch (IOException o) {

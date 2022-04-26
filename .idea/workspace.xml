@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0d8f92f3-d475-4e4d-b505-ae02225efea4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameManager/GameManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameManager/StoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/StoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/PlayerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/ServerConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
