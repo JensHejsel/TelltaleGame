@@ -17,6 +17,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class GameManager {
     JTextField iP = new JTextField();
@@ -26,6 +27,8 @@ public class GameManager {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+
+    private ArrayList<PlayerHandler> players = new ArrayList<PlayerHandler>();
 
     public static void main(String[] args) { GameManager manager = new GameManager(); }
     public GameManager() {
