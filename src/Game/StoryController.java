@@ -44,10 +44,10 @@ public class StoryController {
     ArrayList<String> sixthPart = new ArrayList<String>(Arrays.asList("ENEMY trak en @%# og begyndte at t�ske NAME", 
     																	"NAME k�rtegnede blidt ENEMY, men pludseligt sprang ENEMY op og bed NAME",
     																	"NAME blev bange da ENEMY begyndte at @%# ham	"));
-    ArrayList<String> seventhPart = new ArrayList<String>(Arrays.asList(""));
-    ArrayList<String> eightthPart = new ArrayList<String>(Arrays.asList(""));
-    ArrayList<String> ninethPart = new ArrayList<String>(Arrays.asList(""));
-    ArrayList<String> tenthPart = new ArrayList<String>(Arrays.asList(""));
+    ArrayList<String> seventhPart = new ArrayList<String>(Arrays.asList("NAME var nu blevet godt træt af ENEMY, så han @%#."));
+    ArrayList<String> eightthPart = new ArrayList<String>(Arrays.asList("ENEMY blev @%# så han fløj væk"));
+    ArrayList<String> ninethPart = new ArrayList<String>(Arrays.asList("NAME var nu helt alene i verden det gjorde ham @%#"));
+    ArrayList<String> tenthPart = new ArrayList<String>(Arrays.asList("NAME kunne nu @%# til sine dages ende"));
     
     public String getNextLine() {
     	switch(storyState) {
