@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
 
+    String currentVote;
     String currentAnswer;
     String username;
 
@@ -20,5 +21,12 @@ public class Player {
 
     public String getCurrentAnswer() {
         return currentAnswer;
+    }
+
+    public void setCurrentVote(String currentVote) {
+        this.currentVote = currentVote;
+    }
+    public String getCurrentVote(){
+        return currentVote;
     }
 }

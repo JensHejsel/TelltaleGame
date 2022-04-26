@@ -39,7 +39,7 @@ public class ServerConnection implements Runnable {
                         gameManager.joinGameWindow();
                     }
                     else if (input.startsWith("startvoting")) {
-                        gameManager.joinVotingWindow(input.replace("startvoting", ""));
+                        gameManager.joinVotingWindow(input.replace("startvoting:", ""));
                     }
                 }
             } catch (IOException e) {

@@ -3,6 +3,7 @@ package Game;
 import javax.swing.*;
 import static javax.swing.BoxLayout.Y_AXIS;
 
+import java.lang.Object;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -29,6 +30,9 @@ public class GameManager {
     private static ExecutorService pool = Executors.newFixedThreadPool(8);
     Player hostPlayer = null;
 
+    String combinedPlayerAnswers;
+
+    String hostCurrentVote;
     ServerConnection serverConn;
     StoryController storyController = new StoryController();
     JTextField iP = new JTextField();
@@ -243,7 +247,7 @@ public class GameManager {
         JButton startVoting = new JButton("Start afstemning");
         startVoting.addActionListener(e -> {
             hostVotingWindow();
-            String combinedPlayerAnswers = "";
+            combinedPlayerAnswers = "";
             for (PlayerHandler player : players)
                 combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
 
@@ -284,7 +288,15 @@ public class GameManager {
         for (PlayerHandler player : players) {
             JButton x = new JButton(player.getPlayer().getCurrentAnswer());
             gamePanel.add(x);
+            x.addActionListener(e-> hostVoteInput(x) );
         }
+        JButton seeWinnerOfThisRound = new JButton("Se vinder");
+        seeWinnerOfThisRound.addActionListener(e -> {
+            //start nyt vindue
+            Player winner = findWinner();
+            
+        });
+        hostFrame.add(seeWinnerOfThisRound);
         hostFrame.add(gamePanel);
         hostFrame.revalidate();
         hostFrame.repaint();
@@ -299,6 +311,7 @@ public class GameManager {
         for (String x : answers.split(":")) {
             JButton button = new JButton(x.replace(":", ""));
             gamePanel.add(button);
+            button.addActionListener(e->  joinVoteInput(button) );
         }
         joinFrame.add(gamePanel);
         joinFrame.revalidate();
@@ -315,5 +328,36 @@ public class GameManager {
 
     public ArrayList<PlayerHandler> getPlayers() {
         return players;
+    }
+
+    private void hostVoteInput(JButton thisButton){
+        hostPlayer.setCurrentVote(thisButton.getText());
+    }
+    private void joinVoteInput(JButton thisButton){
+        serverConn.getOut().println("vote:"+ serverConn.getUsername()+ ":" + thisButton.getText());
+    }
+    private Player findWinner(){
+        Player winner = null;
+        int votesForRightAnswer = 0;
+        for (PlayerHandler player : players){
+            int index = 0;
+            int currentVotes =0;
+            while((index = combinedPlayerAnswers.indexOf(player.getPlayer().getCurrentVote(),index)) != -1){
+                currentVotes++;
+            }
+            if (currentVotes > votesForRightAnswer){
+                winner = player.getPlayer();
+            }
+        }
+        int index = 0;
+        int currentVotes =0;
+        while((index = combinedPlayerAnswers.indexOf(hostPlayer.getCurrentVote(),index)) != -1){
+            currentVotes++;
+        }
+        if(currentVotes > votesForRightAnswer){
+            winner = hostPlayer;
+        }
+        return winner;
+
     }
 }

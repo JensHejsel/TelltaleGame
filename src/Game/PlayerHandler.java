@@ -39,6 +39,13 @@ public class PlayerHandler implements Runnable {
                             break;
                         }
                     }
+                } else if (input.startsWith("vote:")) {
+                    for (PlayerHandler x : gameManager.getPlayers()) {
+                        if (input.split(":", 0)[1].replace(":", "").equals(x.getPlayer().getUsername())) {
+                            x.getPlayer().setCurrentVote(input.split(":", 0)[2]);
+                            break;
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
