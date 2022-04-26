@@ -1,4 +1,4 @@
-package GameManager;
+package Game;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,36 +13,36 @@ public class StoryController {
     private String lokation = "Din mor";
     private String enemy = "Pikachu";
     ArrayList<String> firstPart = new ArrayList<String>(Arrays.asList("Der var engang en dreng som hed @%#", 
-    																  "Nu skal i hører historien om @%# som var en papegøje", 
+    																  "Nu skal i hï¿½rer historien om @%# som var en papegï¿½je", 
     																  "Der var engang en moden kvinde kendt som @%#",
     																  "Der var engang en onkel som gik under aliaset @%#",
     																  "Der var engang en hemmelig agent kendt som @%#", 
-    																  "Nu skal i hører om rotten @%#",
-    																  "Nu skal i hører om nørden @%#",
-    																  "Der var engang en bjørn den hed @%#"));
+    																  "Nu skal i hï¿½rer om rotten @%#",
+    																  "Nu skal i hï¿½rer om nï¿½rden @%#",
+    																  "Der var engang en bjï¿½rn den hed @%#"));
     ArrayList<String> secondPart = new ArrayList<String>(Arrays.asList("NAME elskede at spille @%#",
-    																   "@%# var NAME's ynglingsting og den skulle altid med på eventyr",
-    																	"NAME kunne godt lide at have @%# med sig overalt det føltes betrykkende",
-    																	"NAME havde jordens største @%#",
-    																	"NAME tog altid sit sværd med sig fordi den ofte manglede @%#",
-    																	"NAME glemte altid sin @%# når NAME skulle på tur",
+    																   "@%# var NAME's ynglingsting og den skulle altid med pï¿½ eventyr",
+    																	"NAME kunne godt lide at have @%# med sig overalt det fï¿½ltes betrykkende",
+    																	"NAME havde jordens stï¿½rste @%#",
+    																	"NAME tog altid sit svï¿½rd med sig fordi den ofte manglede @%#",
+    																	"NAME glemte altid sin @%# nï¿½r NAME skulle pï¿½ tur",
     																	"NAME fik tit at vide NAME var god til at @%#"));
-    ArrayList<String> thirdPart = new ArrayList<String>(Arrays.asList("NAME måtte nu bevæge sig mod @%#",
-    																	"'Nu går jeg til @%#' sagde NAME",
-    																	"NAME fløj ud af vinduet mod @%#",
-    																	"NAME hopped af sted på 2 ben på vej mod @%#",
-    																	"Op af skorstenen gik det, nu var NAME på vej mod @%#"));
-    ArrayList<String> fourthPart = new ArrayList<String>(Arrays.asList("Da NAME ankom til LOKATION skete det utænkelige hans @%# eksploderede",
-																		"NAME fløj hen over LOKATION, da NAME så hvad hvordan stedet var blevet @%# blev NAME chokeret",
+    ArrayList<String> thirdPart = new ArrayList<String>(Arrays.asList("NAME mï¿½tte nu bevï¿½ge sig mod @%#",
+    																	"'Nu gï¿½r jeg til @%#' sagde NAME",
+    																	"NAME flï¿½j ud af vinduet mod @%#",
+    																	"NAME hopped af sted pï¿½ 2 ben pï¿½ vej mod @%#",
+    																	"Op af skorstenen gik det, nu var NAME pï¿½ vej mod @%#"));
+    ArrayList<String> fourthPart = new ArrayList<String>(Arrays.asList("Da NAME ankom til LOKATION skete det utï¿½nkelige hans @%# eksploderede",
+																		"NAME flï¿½j hen over LOKATION, da NAME sï¿½ hvad hvordan stedet var blevet @%# blev NAME chokeret",
 																		"NAME opdagede hvor utroligt @%# LOKATION var blevet",
-																		"NAME havde aldrig set noget så @%#  som LOKATION, NAME begyndte at græde"));
-    ArrayList<String> fifthPart = new ArrayList<String>(Arrays.asList("Pludeseligt opdagede NAME noget bag buskene bag træet det lignede en @%# ",
-    																	"Der lød et skrig, pludseligt fløj @%# hen over hovede på NAME",
-    																	"Det buldrede kraftigt da @%# kom løbende mod NAME",
+																		"NAME havde aldrig set noget sï¿½ @%#  som LOKATION, NAME begyndte at grï¿½de"));
+    ArrayList<String> fifthPart = new ArrayList<String>(Arrays.asList("Pludeseligt opdagede NAME noget bag buskene bag trï¿½et det lignede en @%# ",
+    																	"Der lï¿½d et skrig, pludseligt flï¿½j @%# hen over hovede pï¿½ NAME",
+    																	"Det buldrede kraftigt da @%# kom lï¿½bende mod NAME",
     																	"Skyerne sortnede og med et stod der en @%# foran NAME", 
-    																	"Det pudslede i græsset, og NAME så en @%# komme krybende"));
-    ArrayList<String> sixthPart = new ArrayList<String>(Arrays.asList("ENEMY trak en @%# og begyndte at tæske NAME", 
-    																	"NAME kærtegnede blidt ENEMY, men pludseligt sprang ENEMY op og bed NAME",
+    																	"Det pudslede i grï¿½sset, og NAME sï¿½ en @%# komme krybende"));
+    ArrayList<String> sixthPart = new ArrayList<String>(Arrays.asList("ENEMY trak en @%# og begyndte at tï¿½ske NAME", 
+    																	"NAME kï¿½rtegnede blidt ENEMY, men pludseligt sprang ENEMY op og bed NAME",
     																	"NAME blev bange da ENEMY begyndte at @%# ham	"));
     ArrayList<String> seventhPart = new ArrayList<String>(Arrays.asList(""));
     ArrayList<String> eightthPart = new ArrayList<String>(Arrays.asList(""));
