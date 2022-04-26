@@ -95,21 +95,17 @@ public class StoryController {
     	return returnString;
     }
     public String setVotedAnswer(String answer) {
-    	currentLine = currentLine.replaceAll("__________",answer);
-    	currentStory += currentLine;
-    	switch(storyState) {
-	    	case 1:
-	    		name = answer;
-	    		break;
-	    	case 3:
-	    		lokation = answer;
-	    		break;
-	    	case 5:
-	    		enemy = answer;
-	    		break;
-    	}
-		return currentLine;
+		return currentLine.replaceAll("__________",answer);
     }
+	public void setWinningAnswer(String answer){
+		currentStory += answer;
+		String newAnswer = answer.replaceAll(currentLine, "").strip();
+		switch (storyState) {
+			case 1 -> name = newAnswer;
+			case 3 -> lokation = newAnswer;
+			case 5 -> enemy = newAnswer;
+		}
+	}
     public String getFullStory() {
     	return currentStory;
     }
