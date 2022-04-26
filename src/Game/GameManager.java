@@ -238,7 +238,7 @@ public class GameManager {
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
         JButton sendSentence = new JButton("Indsæt ord");
         JButton startVoting = new JButton("Start afstemning");
-        startVoting.addActionListener(e -> votingWindow());
+        startVoting.addActionListener(e -> hostVotingWindow());
         JLabel unfinishedSentence = new JLabel(nextLine);
         hostFrame.add(gamePanel);
         hostFrame.add(unfinishedSentence);
@@ -262,7 +262,7 @@ public class GameManager {
         joinFrame.revalidate();
         joinFrame.repaint();
     }
-    private void votingWindow(){
+    private void hostVotingWindow(){
         hostFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
