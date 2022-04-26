@@ -30,10 +30,12 @@ public class ServerConnection implements Runnable {
             try {
                 while (true) {
                     String input = in.readLine();
+
                     if (input.startsWith("nextLine:")){
                         nextLine = input.split(":",0)[1];
                     }
-                    else if (input == "startgame") {
+                    else if (input.startsWith("startgame")) {
+                        System.out.println(input);
                         gameManager.joinGameWindow();
                     }
                 }

@@ -245,6 +245,7 @@ public class GameManager {
         hostFrame.revalidate();
     }
     public void joinGameWindow(){
+        System.out.println("diller");
         joinFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
@@ -256,7 +257,6 @@ public class GameManager {
         joinFrame.add(unfinishedSentence);
         joinFrame.add(userInput);
         joinFrame.add(sendSentence);
-        gamePanel.add(gamePanel);
         joinFrame.revalidate();
     }
     private void votingWindow(){
