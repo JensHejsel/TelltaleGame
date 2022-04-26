@@ -10,7 +10,7 @@ public class ServerConnection implements Runnable {
 
     GameManager gameManager;
     String username;
-    private String nextLine;
+    private String nextLine = "";
     private Socket server;
     private BufferedReader in;
     private PrintWriter out;

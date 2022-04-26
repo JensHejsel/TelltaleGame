@@ -80,7 +80,6 @@ public class GameManager {
 
     private void onJoinButtonClicked() {
 
-        joinFrame = new JFrame("Story Teller");
         JPanel joinPanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
@@ -256,6 +255,7 @@ public class GameManager {
         joinFrame.add(userInput);
         joinFrame.add(sendSentence);
         joinFrame.revalidate();
+        joinFrame.repaint();
     }
     private void votingWindow(){
         joinFrame.getContentPane().removeAll();
