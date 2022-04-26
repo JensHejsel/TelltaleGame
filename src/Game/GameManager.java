@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.InetAddress;
@@ -25,14 +26,16 @@ import java.util.concurrent.Executors;
 public class GameManager {
 
     private static ExecutorService pool = Executors.newFixedThreadPool(8);
+    Player hostPlayer = null;
+
     ServerConnection serverConn;
     JTextField iP = new JTextField();
     JTextField port = new JTextField();
     JTextField username = new JTextField();
+    JLabel connectedUsersLabel = new JLabel();
     JFrame joinFrame = new JFrame("Story Teller");
     JFrame hostFrame = new JFrame();
     StoryController storyController = new StoryController();
-    JLabel connectedUsersLabel;
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
@@ -74,6 +77,8 @@ public class GameManager {
     }
 
     private void onJoinButtonClicked() {
+
+        JFrame joinFrame = new JFrame("Story Teller");
         JPanel joinPanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
@@ -111,17 +116,21 @@ public class GameManager {
         JTextField hostUsernameField = new JTextField("Indtast brugernavn");
         hostUsernameField.setMaximumSize(new Dimension(200,30));
         hostUsernameField.setMargin(new Insets(30, 0, 0, 0));
-        JLabel connectedUsersLabel = new JLabel("Forbindelser:\n");
+        connectedUsersLabel = new JLabel("Forbindelser:\n");
 
         String finalIpAddress = ipAddress;
         copyToClipboardButton.addActionListener(e -> copyToClipboard(finalIpAddress));
 
+        hostFrame = new JFrame();
         hostFrame.setBackground(Color.BLACK);
         hostFrame.setMinimumSize(new Dimension(400, 400));
         hostFrame.setLocationRelativeTo(null);
 
         JButton startServerButton = new JButton("Igangsæt spil");
-        startServerButton.addActionListener(e -> gameWindow());
+        startServerButton.addActionListener(listener -> {
+            gameWindow();
+            hostPlayer = new Player(hostUsernameField.getText());
+        });
         JPanel hostPanel = new JPanel();
 
         GroupLayout layout = new GroupLayout(hostPanel);
@@ -175,6 +184,7 @@ public class GameManager {
                         System.out.println("Waiting for connection request on port " + portNumber + "...");
 
                         Socket con = ss.accept();
+                        System.out.println(ss.getInetAddress() + " connected");
                         PlayerHandler player = new PlayerHandler(con, x);
                         players.add(player);
                         pool.execute(player);
@@ -204,8 +214,8 @@ public class GameManager {
         try {
             //int portNumber = Integer.parseInt(port.getText());
             //String iPAddress = iP.getText();
-            Socket con = new Socket("172.31.147.101", 5000);
-            serverConn = new ServerConnection(con, new Player(username.getText()));
+            Socket con = new Socket(iP.getText(), 5000);
+            serverConn = new ServerConnection(con, username.getText());
 
             new Thread(serverConn).start();
 

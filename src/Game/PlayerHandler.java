@@ -5,19 +5,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class PlayerHandler implements Runnable {
 
+    Player player;
     GameManager gameManager;
-    private Socket player;
+    private Socket playerSocket;
     private BufferedReader in;
     private PrintWriter out;
 
     public PlayerHandler(Socket playerSocket, GameManager gameManager)throws IOException {
-        this.player = playerSocket;
+        this.playerSocket = playerSocket;
         this.gameManager = gameManager;
-        in = new BufferedReader(new InputStreamReader(player.getInputStream()));
-        out = new PrintWriter(player.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
+        out = new PrintWriter(playerSocket.getOutputStream(), true);
     }
     @Override
     public void run() {
@@ -26,15 +28,18 @@ public class PlayerHandler implements Runnable {
             while (true) {
                 String input = in.readLine();
 
-
-                if (input.startsWith("username: ")) {
-                    gameManager.displayConnectedUsers(input.split(": ", 0)[1]);
+                if (input.startsWith("username:")) {
+                    player = new Player(input.split(":", 0)[1]);
+                    gameManager.displayConnectedUsers(input.split(":", 0)[1]);
                 }
             }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public Player getPlayer() {
+        return player;
     }
 }

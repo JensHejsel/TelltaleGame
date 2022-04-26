@@ -8,15 +8,15 @@ import java.net.Socket;
 
 public class ServerConnection implements Runnable {
 
-    private Player player;
+    String username;
     private String nextLine;
     private Socket server;
     private BufferedReader in;
     private PrintWriter out;
 
-    public ServerConnection(Socket server, Player player) throws IOException {
+    public ServerConnection(Socket server, String username) throws IOException {
         this.server = server;
-        this.player = player;
+        this.username = username;
         in = new BufferedReader(new InputStreamReader(server.getInputStream()));
         out = new PrintWriter(server.getOutputStream(), true);
     }
@@ -24,7 +24,7 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
 
-        out.print("username: " + player.getUsername());
+        out.print("username: " + username);
             try {
                 while (true) {
                     String input = in.readLine();
