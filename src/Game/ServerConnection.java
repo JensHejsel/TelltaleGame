@@ -31,6 +31,9 @@ public class ServerConnection implements Runnable {
                     if (input.startsWith("nextLine:")){
                         nextLine = input.split(":",0)[1];
                     }
+                    else if (input == "startgame") {
+
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

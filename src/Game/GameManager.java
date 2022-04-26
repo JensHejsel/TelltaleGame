@@ -45,7 +45,8 @@ public class GameManager {
 
     private static ArrayList<PlayerHandler> players = new ArrayList<PlayerHandler>();
 
-    public static void main(String[] args) { GameManager manager = new GameManager(); }
+    public static void main(String[] args) { GameManager manager = new GameManager();
+    }
     public GameManager() {
 
         //Create and set up the window.
@@ -130,6 +131,9 @@ public class GameManager {
         JButton startServerButton = new JButton("Igangsæt spil");
         startServerButton.addActionListener(listener -> {
             hostGameWindow();
+            for (PlayerHandler playerHandler : players) {
+                playerHandler.getOut().println("startgame");
+            }
             hostPlayer = new Player(hostUsernameField.getText());
         });
         JPanel hostPanel = new JPanel();
@@ -208,7 +212,7 @@ public class GameManager {
     }
 
     public void displayConnectedUsers(String username) {
-        connectedUsersLabel.setText(connectedUsersLabel.getText() + "\n" + username);
+        connectedUsersLabel.setText(connectedUsersLabel.getText() + ", " + username);
     }
 
     private void joinLobby() {
@@ -238,10 +242,9 @@ public class GameManager {
         hostFrame.add(userInput);
         hostFrame.add(sendSentence);
         hostFrame.add(startVoting);
-        gamePanel.add(gamePanel);
         hostFrame.revalidate();
     }
-    private void joinGameWindow(){
+    public void joinGameWindow(){
         joinFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
@@ -263,7 +266,7 @@ public class GameManager {
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
         JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
         for (PlayerHandler player : players) {
-            JButton  = new JButton();
+            JButton x = new JButton();
         }
         joinFrame.add(gamePanel);
         joinFrame.add(unfinishedSentence);
