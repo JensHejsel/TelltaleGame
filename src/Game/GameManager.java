@@ -25,10 +25,13 @@ import java.util.concurrent.Executors;
 public class GameManager {
 
     private static ExecutorService pool = Executors.newFixedThreadPool(8);
-
+    ServerConnection serverConn;
     JTextField iP = new JTextField();
     JTextField port = new JTextField();
     JTextField username = new JTextField();
+    JFrame joinFrame = new JFrame("Story Teller");
+    JFrame hostFrame = new JFrame();
+    StoryController storyController = new StoryController();
     JLabel connectedUsersLabel;
     private ServerSocket serverSocket;
     private Socket clientSocket;
@@ -71,8 +74,6 @@ public class GameManager {
     }
 
     private void onJoinButtonClicked() {
-
-        JFrame joinFrame = new JFrame("Story Teller");
         JPanel joinPanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
@@ -115,12 +116,12 @@ public class GameManager {
         String finalIpAddress = ipAddress;
         copyToClipboardButton.addActionListener(e -> copyToClipboard(finalIpAddress));
 
-        JFrame hostFrame = new JFrame();
         hostFrame.setBackground(Color.BLACK);
         hostFrame.setMinimumSize(new Dimension(400, 400));
         hostFrame.setLocationRelativeTo(null);
 
         JButton startServerButton = new JButton("Igangsæt spil");
+        startServerButton.addActionListener(e -> gameWindow());
         JPanel hostPanel = new JPanel();
 
         GroupLayout layout = new GroupLayout(hostPanel);
@@ -204,7 +205,7 @@ public class GameManager {
             //int portNumber = Integer.parseInt(port.getText());
             //String iPAddress = iP.getText();
             Socket con = new Socket("172.31.147.101", 5000);
-            ServerConnection serverConn = new ServerConnection(con, new Player(username.getText()));
+            serverConn = new ServerConnection(con, new Player(username.getText()));
 
             new Thread(serverConn).start();
 
@@ -212,4 +213,21 @@ public class GameManager {
             System.out.println("caught");
         }
     }
+    private void gameWindow(){
+        hostFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
+        hostFrame.setMinimumSize(new Dimension(1000, 1000));
+        hostFrame.setBackground(Color.black);
+        JButton sendSentence = new JButton("Indsæt ord");
+        JTextField userInput = new JTextField("Indsæt dit ord her");
+        JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
+        hostFrame.add(gamePanel);
+        hostFrame.add(unfinishedSentence);
+        hostFrame.add(userInput);
+        hostFrame.add(sendSentence);
+        gamePanel.add(gamePanel);
+        hostFrame.revalidate();
+    }
+
 }
