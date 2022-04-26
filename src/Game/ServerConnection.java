@@ -8,7 +8,8 @@ import java.net.Socket;
 
 public class ServerConnection implements Runnable {
 
-    Player player;
+    private Player player;
+    private String nextLine;
     private Socket server;
     private BufferedReader in;
     private PrintWriter out;
@@ -23,12 +24,19 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
 
-        out.println("username: " + player.getUsername());
-
-        while (true) {
-
-
-
-        }
+        out.print("username: " + player.getUsername());
+            try {
+                while (true) {
+                    String input = in.readLine();
+                    if (input.startsWith("nextLine:")){
+                        nextLine = input.split(":",0)[1];
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+    }
+    public String getNextLine(){
+        return nextLine;
     }
 }
