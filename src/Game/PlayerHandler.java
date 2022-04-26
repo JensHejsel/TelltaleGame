@@ -27,14 +27,15 @@ public class PlayerHandler implements Runnable {
         try {
             while (true) {
                 String input = in.readLine();
-
                 if (input.startsWith("username:")) {
                     player = new Player(input.split(":", 0)[1]);
                     gameManager.displayConnectedUsers(input.split(":", 0)[1]);
                 } else if(input.startsWith("answer:")) {
                     for (PlayerHandler x : gameManager.getPlayers()) {
-                        if (input.split(":", 0)[1] == x.getPlayer().getUsername()) {
-                            x.getPlayer().setCurrentAnswer(input.split(":", 0)[0]);
+                        //System.out.println(input.split(":", 0)[1].replace(":", "") + " | " + x.getPlayer().getUsername());
+                        if (input.split(":", 0)[1].replace(":", "").equals(x.getPlayer().getUsername())) {
+                            x.getPlayer().setCurrentAnswer(input.split(":", 0)[2]);
+                            System.out.println(x.getPlayer().getCurrentAnswer());
                             break;
                         }
                     }

@@ -1,6 +1,7 @@
 package Game;
 
 import javax.swing.*;
+import static javax.swing.BoxLayout.Y_AXIS;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -129,6 +130,7 @@ public class GameManager {
 
         JButton startServerButton = new JButton("Igangsæt spil");
         startServerButton.addActionListener(listener -> {
+            hostPlayer = new Player(hostUsernameField.getText());
             hostGameWindow();
             for (PlayerHandler playerHandler : players) {
                 playerHandler.getOut().println("startgame");
@@ -237,8 +239,16 @@ public class GameManager {
         hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
         JButton sendSentence = new JButton("Indsæt ord");
+        sendSentence.addActionListener(e -> hostInput());
         JButton startVoting = new JButton("Start afstemning");
-        startVoting.addActionListener(e -> hostVotingWindow());
+        startVoting.addActionListener(e -> {
+            hostVotingWindow();
+            String combinedPlayerAnswers = "";
+            for (PlayerHandler player : players)
+                combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
+
+            serverConn.getOut().println("startvoting:" + hostPlayer.getCurrentAnswer() + combinedPlayerAnswers);
+        });
         JLabel unfinishedSentence = new JLabel(nextLine);
         hostFrame.add(gamePanel);
         hostFrame.add(unfinishedSentence);
@@ -253,6 +263,7 @@ public class GameManager {
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
         JButton sendSentence = new JButton("Indsæt ord");
+        sendSentence.addActionListener(listener -> userInput());
         JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
         sendSentence.addActionListener(e -> userInput());
         joinFrame.add(gamePanel);
@@ -262,25 +273,44 @@ public class GameManager {
         joinFrame.revalidate();
         joinFrame.repaint();
     }
-    private void hostVotingWindow(){
+    private void hostVotingWindow() {
         hostFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
-        hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
+        BoxLayout boxLayout = new BoxLayout(gamePanel, Y_AXIS);
+        gamePanel.setLayout(boxLayout);
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
+        JButton hostInput = new JButton(hostPlayer.getCurrentAnswer());
+        gamePanel.add(hostInput);
         for (PlayerHandler player : players) {
             JButton x = new JButton(player.getPlayer().getCurrentAnswer());
             gamePanel.add(x);
         }
-        JLabel j = new JLabel("HEJ");
-        gamePanel.add(j);
         hostFrame.add(gamePanel);
         hostFrame.revalidate();
         hostFrame.repaint();
     }
+
+    public void joinVotingWindow(String answers) {
+        joinFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        BoxLayout boxLayout = new BoxLayout(gamePanel, Y_AXIS);
+        gamePanel.setLayout(boxLayout);
+        joinFrame.setMinimumSize(new Dimension(1000, 1000));
+        for (String x : answers.split(":")) {
+            JButton button = new JButton(x.replace(":", ""));
+            gamePanel.add(button);
+        }
+        joinFrame.add(gamePanel);
+        joinFrame.revalidate();
+        joinFrame.repaint();
+    }
+
+    private void hostInput() {
+        hostPlayer.setCurrentAnswer(storyController.setVotedAnswer(userInput.getText()));
+    }
+
     private void userInput(){
-
         serverConn.getOut().println("answer:"+ serverConn.getUsername()+ ":" + storyController.setVotedAnswer(userInput.getText()));
-
     }
 
     public ArrayList<PlayerHandler> getPlayers() {
