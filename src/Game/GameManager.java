@@ -162,7 +162,7 @@ public class GameManager {
                 StringBuffer msg = new StringBuffer();
                 int c;
                 while ((c = in.read()) != 0)
-                    msg.append((char)c);
+                    msg.append((char) c);
                 PrintWriter out = new PrintWriter(con.getOutputStream());
                 out.print("Simon says: " + msg);
                 out.flush();
@@ -174,19 +174,19 @@ public class GameManager {
             System.err.println(e);
         }
 
-
-    private void joinLobby() {
-        try {
-            //int portNumber = Integer.parseInt(port.getText());
-            //String iPAddress = iP.getText();
-            Socket con = new Socket("172.31.147.101", 5000);
-            PrintWriter out = new PrintWriter(con.getOutputStream());
-            out.print("Hello Server!");
-            out.write(0);
-            out.flush();
-            InputStreamReader in = new InputStreamReader(con.getInputStream());
-        } catch (IOException o) {
-            System.out.println("caught");
-        }
     }
+        private void joinLobby() {
+            try {
+                //int portNumber = Integer.parseInt(port.getText());
+                //String iPAddress = iP.getText();
+                Socket con = new Socket("172.31.147.101", 5000);
+                PrintWriter out = new PrintWriter(con.getOutputStream());
+                out.print("Hello Server!");
+                out.write(0);
+                out.flush();
+                InputStreamReader in = new InputStreamReader(con.getInputStream());
+            } catch (IOException o) {
+                System.out.println("caught");
+            }
+        }
 }
