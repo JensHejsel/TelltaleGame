@@ -80,7 +80,7 @@ public class GameManager {
 
     private void onJoinButtonClicked() {
 
-        JFrame joinFrame = new JFrame("Story Teller");
+        joinFrame = new JFrame("Story Teller");
         JPanel joinPanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
@@ -235,7 +235,6 @@ public class GameManager {
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
         JButton sendSentence = new JButton("Indsæt ord");
         JButton startVoting = new JButton("Start afstemning");
-        JTextField userInput = new JTextField("Indsæt dit ord her");
         JLabel unfinishedSentence = new JLabel(storyController.getNextLine());
         hostFrame.add(gamePanel);
         hostFrame.add(unfinishedSentence);
@@ -245,7 +244,6 @@ public class GameManager {
         hostFrame.revalidate();
     }
     public void joinGameWindow(){
-        System.out.println("diller");
         joinFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
