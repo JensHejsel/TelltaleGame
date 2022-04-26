@@ -228,13 +228,17 @@ public class GameManager {
         }
     }
     private void hostGameWindow(){
+        String nextLine = storyController.getNextLine();
+        for (PlayerHandler playerHandler : players)
+            playerHandler.getOut().println("nextLine:" + nextLine);
+
         hostFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
         JButton sendSentence = new JButton("Indsæt ord");
         JButton startVoting = new JButton("Start afstemning");
-        JLabel unfinishedSentence = new JLabel(storyController.getNextLine());
+        JLabel unfinishedSentence = new JLabel(nextLine);
         hostFrame.add(gamePanel);
         hostFrame.add(unfinishedSentence);
         hostFrame.add(userInput);
@@ -273,5 +277,9 @@ public class GameManager {
     }
     private void userInput(){
         serverConn.getOut().println("answer:"+ serverConn.getUsername()+":" + storyController.setVotedAnswer(userInput.toString()));
+    }
+
+    public ArrayList<PlayerHandler> getPlayers() {
+        return players;
     }
 }
