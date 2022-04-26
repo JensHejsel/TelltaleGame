@@ -87,15 +87,15 @@ public class StoryController {
     }
     private String findNextLine(ArrayList<String> inputList) {
     	String returnString = inputList.get(randGene.nextInt(0, inputList.size()));
-    	returnString.replaceAll("@%#", "__________");
-    	returnString.replaceAll("NAME", name);
-    	returnString.replaceAll("LOKATION", lokation);
-    	returnString.replaceAll("ENEMY", enemy);
+    	returnString = returnString.replaceAll("@%#", "__________");
+		returnString = returnString.replaceAll("NAME", name);
+		returnString = returnString.replaceAll("LOKATION", lokation);
+		returnString = returnString.replaceAll("ENEMY", enemy);
     	currentLine = returnString;
     	return returnString;
     }
     public String setVotedAnswer(String answer) {
-    	currentLine.replaceAll("__________",answer);
+    	currentLine = currentLine.replaceAll("__________",answer);
     	currentStory += currentLine;
     	switch(storyState) {
 	    	case 1:
