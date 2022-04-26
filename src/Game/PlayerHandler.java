@@ -34,7 +34,7 @@ public class PlayerHandler implements Runnable {
                 } else if(input.startsWith("answer:")) {
                     for (PlayerHandler x : gameManager.getPlayers()) {
                         if (input.split(":", 0)[1] == x.getPlayer().getUsername()) {
-                            x.getPlayer().setCurrentAnswer(input.split(":", 0)[2]);
+                            x.getPlayer().setCurrentAnswer(input.split(":", 0)[0]);
                             break;
                         }
                     }

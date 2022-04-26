@@ -278,7 +278,9 @@ public class GameManager {
         hostFrame.repaint();
     }
     private void userInput(){
-        serverConn.getOut().println("answer:"+ serverConn.getUsername()+":" + storyController.setVotedAnswer(userInput.toString()));
+
+        serverConn.getOut().println("answer:"+ serverConn.getUsername()+ ":" + storyController.setVotedAnswer(userInput.getText()));
+
     }
 
     public ArrayList<PlayerHandler> getPlayers() {

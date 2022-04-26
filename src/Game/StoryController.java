@@ -95,7 +95,7 @@ public class StoryController {
     	return returnString;
     }
     public String setVotedAnswer(String answer) {
-		return currentLine.replaceAll("__________",answer);
+		return currentLine.replace("__________",answer);
     }
 	public void setWinningAnswer(String answer){
 		currentStory += answer;
@@ -109,4 +109,8 @@ public class StoryController {
     public String getFullStory() {
     	return currentStory;
     }
+
+	public void updateCurrentLine(String newCurrentLine){
+		currentLine = newCurrentLine;
+	}
 }
