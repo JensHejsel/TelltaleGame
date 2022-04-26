@@ -29,13 +29,14 @@ public class GameManager {
     Player hostPlayer = null;
 
     ServerConnection serverConn;
+    StoryController storyController = new StoryController();
     JTextField iP = new JTextField();
     JTextField port = new JTextField();
     JTextField username = new JTextField();
     JLabel connectedUsersLabel = new JLabel();
     JFrame joinFrame = new JFrame("Story Teller");
     JFrame hostFrame = new JFrame();
-    StoryController storyController = new StoryController();
+    JTextField userInput = new JTextField("Indsæt dit ord her");
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
@@ -128,7 +129,7 @@ public class GameManager {
 
         JButton startServerButton = new JButton("Igangsæt spil");
         startServerButton.addActionListener(listener -> {
-            gameWindow();
+            hostGameWindow();
             hostPlayer = new Player(hostUsernameField.getText());
         });
         JPanel hostPanel = new JPanel();
@@ -223,21 +224,53 @@ public class GameManager {
             System.out.println("caught");
         }
     }
-    private void gameWindow(){
+    private void hostGameWindow(){
         hostFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
-        hostFrame.setBackground(Color.black);
         JButton sendSentence = new JButton("Indsæt ord");
+        JButton startVoting = new JButton("Start afstemning");
         JTextField userInput = new JTextField("Indsæt dit ord her");
-        JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
+        JLabel unfinishedSentence = new JLabel(storyController.getNextLine());
         hostFrame.add(gamePanel);
         hostFrame.add(unfinishedSentence);
         hostFrame.add(userInput);
         hostFrame.add(sendSentence);
+        hostFrame.add(startVoting);
         gamePanel.add(gamePanel);
         hostFrame.revalidate();
     }
-
+    private void joinGameWindow(){
+        joinFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
+        joinFrame.setMinimumSize(new Dimension(1000, 1000));
+        JButton sendSentence = new JButton("Indsæt ord");
+        JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
+        sendSentence.addActionListener(e -> userInput());
+        joinFrame.add(gamePanel);
+        joinFrame.add(unfinishedSentence);
+        joinFrame.add(userInput);
+        joinFrame.add(sendSentence);
+        gamePanel.add(gamePanel);
+        joinFrame.revalidate();
+    }
+    private void votingWindow(){
+        joinFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        joinFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
+        joinFrame.setMinimumSize(new Dimension(1000, 1000));
+        JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
+        for (PlayerHandler player : players) {
+            JButton  = new JButton();
+        }
+        joinFrame.add(gamePanel);
+        joinFrame.add(unfinishedSentence);
+        gamePanel.add(gamePanel);
+        joinFrame.revalidate();
+    }
+    private void userInput(){
+        serverConn.getOut().println("answer:"+ serverConn.getUsername()+":" + storyController.setVotedAnswer(userInput.toString()));
+    }
 }

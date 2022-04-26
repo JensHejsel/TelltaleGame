@@ -31,6 +31,8 @@ public class PlayerHandler implements Runnable {
                 if (input.startsWith("username:")) {
                     player = new Player(input.split(":", 0)[1]);
                     gameManager.displayConnectedUsers(input.split(":", 0)[1]);
+                } else if(input.startsWith("answer:")){
+
                 }
             }
 

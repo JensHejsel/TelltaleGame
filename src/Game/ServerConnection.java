@@ -24,7 +24,7 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
 
-        out.print("username: " + username);
+        out.println("username: " + username);
             try {
                 while (true) {
                     String input = in.readLine();
@@ -39,4 +39,6 @@ public class ServerConnection implements Runnable {
     public String getNextLine(){
         return nextLine;
     }
+    public PrintWriter getOut(){ return out; }
+    public String getUsername(){return username;}
 }
