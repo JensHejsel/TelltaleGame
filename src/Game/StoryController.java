@@ -94,7 +94,7 @@ public class StoryController {
     	currentLine = returnString;
     	return returnString;
     }
-    public void setVotedAnswer(String answer) {
+    public String setVotedAnswer(String answer) {
     	currentLine.replaceAll("__________",answer);
     	currentStory += currentLine;
     	switch(storyState) {
@@ -107,7 +107,8 @@ public class StoryController {
 	    	case 5:
 	    		enemy = answer;
 	    		break;
-    	}	
+    	}
+		return currentLine;
     }
     public String getFullStory() {
     	return currentStory;
