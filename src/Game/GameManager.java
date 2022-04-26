@@ -17,18 +17,26 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameManager {
+
+    private static ExecutorService pool = Executors.newFixedThreadPool(8);
+
     JTextField iP = new JTextField();
     JTextField port = new JTextField();
     JTextField username = new JTextField();
+    JLabel connectedUsersLabel;
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    boolean gameHasStarted = false;
 
-    private ArrayList<PlayerHandler> players = new ArrayList<PlayerHandler>();
+    private static ArrayList<PlayerHandler> players = new ArrayList<PlayerHandler>();
 
     public static void main(String[] args) { GameManager manager = new GameManager(); }
     public GameManager() {
@@ -152,44 +160,56 @@ public class GameManager {
     }
 
     private void listenForClients() throws IOException {
+        GameManager x = this;
+        new Thread() {
 
-        ServerSocket ss = null;
-        try {
-            int portNumber = 5000;
-            ss = new ServerSocket(portNumber);
-            while (true) {
-                System.out.println("Waiting for connection request on port " + portNumber + "...");
-                Socket con = ss.accept();
-                System.out.println("Connection request received");
-                InputStreamReader in = new InputStreamReader(con.getInputStream());
-                StringBuffer msg = new StringBuffer();
-                int c;
-                while ((c = in.read()) != 0)
-                    msg.append((char) c);
-                PrintWriter out = new PrintWriter(con.getOutputStream());
-                out.print("Simon says: " + msg);
-                out.flush();
-                con.close();
+            @Override
+            public void run() {
+
+                ServerSocket ss = null;
+                try {
+                    int portNumber = 5000;
+                    ss = new ServerSocket(portNumber);
+                    while (gameHasStarted == false) {
+                        System.out.println("Waiting for connection request on port " + portNumber + "...");
+
+                        Socket con = ss.accept();
+                        PlayerHandler player = new PlayerHandler(con, x);
+                        players.add(player);
+                        pool.execute(player);
+                    }
+                } catch (IOException e) {
+                    if (ss != null && ss.isBound() && !ss.isClosed()) {
+                        try {
+                            ss.close();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    System.err.println(e);
+                }
+                finally {
+                    interrupt();
+                }
             }
-        } catch (IOException e) {
-            if (ss != null && ss.isBound() && !ss.isClosed())
-                ss.close();
-            System.err.println(e);
-        }
-
+        }.start();
     }
-        private void joinLobby() {
-            try {
-                //int portNumber = Integer.parseInt(port.getText());
-                //String iPAddress = iP.getText();
-                Socket con = new Socket("172.31.147.101", 5000);
-                PrintWriter out = new PrintWriter(con.getOutputStream());
-                out.print("Hello Server!");
-                out.write(0);
-                out.flush();
-                InputStreamReader in = new InputStreamReader(con.getInputStream());
-            } catch (IOException o) {
-                System.out.println("caught");
-            }
+
+    public void displayConnectedUsers(String username) {
+        connectedUsersLabel.setText(connectedUsersLabel.getText() + "\n" + username);
+    }
+
+    private void joinLobby() {
+        try {
+            //int portNumber = Integer.parseInt(port.getText());
+            //String iPAddress = iP.getText();
+            Socket con = new Socket("172.31.147.101", 5000);
+            ServerConnection serverConn = new ServerConnection(con, new Player(username.getText()));
+
+            new Thread(serverConn).start();
+
+        } catch (IOException o) {
+            System.out.println("caught");
         }
+    }
 }
