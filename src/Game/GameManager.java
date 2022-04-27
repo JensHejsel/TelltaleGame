@@ -248,10 +248,13 @@ public class GameManager {
         startVoting.addActionListener(e -> {
             hostVotingWindow();
             combinedPlayerAnswers = "";
+            combinedPlayerAnswers+= hostPlayer.getCurrentAnswer();
             for (PlayerHandler player : players)
                 combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
             for (PlayerHandler player : players)
-                player.getOut().println("startvoting:" + hostPlayer.getCurrentAnswer() + combinedPlayerAnswers);
+                player.getOut().println("startvoting:" + combinedPlayerAnswers);
+
+
         });
         JLabel unfinishedSentence = new JLabel(nextLine);
         hostFrame.add(gamePanel);
@@ -284,11 +287,12 @@ public class GameManager {
         gamePanel.setLayout(boxLayout);
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
         JButton hostInput = new JButton(hostPlayer.getCurrentAnswer());
+        hostInput.addActionListener(e-> hostVoteInput(hostInput));
         gamePanel.add(hostInput);
         for (PlayerHandler player : players) {
             JButton x = new JButton(player.getPlayer().getCurrentAnswer());
-            gamePanel.add(x);
             x.addActionListener(e-> hostVoteInput(x) );
+            gamePanel.add(x);
         }
         JButton seeWinnerOfThisRound = new JButton("Se vinder");
         seeWinnerOfThisRound.addActionListener(e -> {
@@ -366,12 +370,14 @@ public class GameManager {
         serverConn.getOut().println("vote:"+ serverConn.getUsername()+ ":" + thisButton.getText());
     }
     private Player findWinner(){
+        System.out.println(hostPlayer.getCurrentVote());
         Player winner = null;
         int votesForRightAnswer = 0;
         for (PlayerHandler player : players){
             int index = 0;
             int currentVotes =0;
             while((index = combinedPlayerAnswers.indexOf(player.getPlayer().getCurrentVote(),index)) != -1){
+
                 currentVotes++;
             }
             if (currentVotes > votesForRightAnswer){
@@ -390,6 +396,7 @@ public class GameManager {
         for(PlayerHandler player : players)
             player.getOut().println("winningAnswer:"+ winner.getCurrentAnswer());
         winner.awardWinner();
+        System.out.println(winner.getUsername());
         return winner;
 
     }
