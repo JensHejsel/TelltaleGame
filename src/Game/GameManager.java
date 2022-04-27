@@ -377,9 +377,9 @@ public class GameManager {
         for (PlayerHandler player : players){
             int index = 0;
             int currentVotes =0;
-            while((index = combinedPlayerAnswers.indexOf(player.getPlayer().getCurrentVote(),index)) != -1){
+            while((index = combinedPlayerAnswers.indexOf(player.getPlayer().getCurrentAnswer(),index)) != -1){
                 currentVotes++;
-                index+=player.getPlayer().getCurrentVote().length();
+                index+=player.getPlayer().getCurrentAnswer().length();
             }
             if (currentVotes > votesForRightAnswer){
                 winner = player.getPlayer();
@@ -387,9 +387,9 @@ public class GameManager {
         }
         int index = 0;
         int currentVotes =0;
-        while((index = combinedPlayerAnswers.indexOf(hostPlayer.getCurrentVote(),index)) != -1){
+        while((index = combinedPlayerAnswers.indexOf(hostPlayer.getCurrentAnswer(),index)) != -1){
             currentVotes++;
-            index+=hostPlayer.getCurrentVote().length();
+            index+=hostPlayer.getCurrentAnswer().length();
         }
         if(currentVotes > votesForRightAnswer){
             winner = hostPlayer;
