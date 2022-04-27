@@ -325,16 +325,17 @@ public class GameManager {
     }
 
     private void hostRoundWinnerWindow(Player winner){
+        System.out.println("igethere");
         hostFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
-        JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winner.getUsername()+" with the answer: " + winner.currentAnswer);
+        JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winner.getUsername()+" with the sentence: " + winner.currentAnswer);
         gamePanel.add(winnerAnnouncer);
         JButton startNextRound = new JButton("Start næste runde");
-        startNextRound.addActionListener(e -> {
+        //startNextRound.addActionListener(e -> {
             //start nyt vindue
 
-        });
+        //});
         hostFrame.add(startNextRound);
         hostFrame.add(gamePanel);
         hostFrame.revalidate();
@@ -344,7 +345,7 @@ public class GameManager {
         joinFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         joinFrame.setMinimumSize(new Dimension(1000, 1000));
-        JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winnerUsername+" with the answer: " + winnerAnswer);
+        JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winnerUsername+" with the sentence: " + winnerAnswer);
         gamePanel.add(winnerAnnouncer);
         joinFrame.add(gamePanel);
         joinFrame.revalidate();
@@ -370,15 +371,14 @@ public class GameManager {
         serverConn.getOut().println("vote:"+ serverConn.getUsername()+ ":" + thisButton.getText());
     }
     private Player findWinner(){
-        System.out.println(hostPlayer.getCurrentVote());
         Player winner = null;
         int votesForRightAnswer = 0;
         for (PlayerHandler player : players){
             int index = 0;
             int currentVotes =0;
             while((index = combinedPlayerAnswers.indexOf(player.getPlayer().getCurrentVote(),index)) != -1){
-
                 currentVotes++;
+                index+=player.getPlayer().getCurrentVote().length();
             }
             if (currentVotes > votesForRightAnswer){
                 winner = player.getPlayer();
@@ -388,15 +388,18 @@ public class GameManager {
         int currentVotes =0;
         while((index = combinedPlayerAnswers.indexOf(hostPlayer.getCurrentVote(),index)) != -1){
             currentVotes++;
+            index+=hostPlayer.getCurrentVote().length();
+            System.out.println("imtrapped");
         }
         if(currentVotes > votesForRightAnswer){
             winner = hostPlayer;
         }
+
         storyController.setWinningAnswer(winner.currentAnswer);
         for(PlayerHandler player : players)
             player.getOut().println("winningAnswer:"+ winner.getCurrentAnswer());
+
         winner.awardWinner();
-        System.out.println(winner.getUsername());
         return winner;
 
     }
