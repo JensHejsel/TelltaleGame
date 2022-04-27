@@ -263,6 +263,7 @@ public class GameManager {
         hostFrame.add(sendSentence);
         hostFrame.add(startVoting);
         hostFrame.revalidate();
+        hostFrame.repaint();
     }
     public void joinGameWindow(){
         joinFrame.getContentPane().removeAll();
@@ -296,11 +297,10 @@ public class GameManager {
         }
         JButton seeWinnerOfThisRound = new JButton("Se vinder");
         seeWinnerOfThisRound.addActionListener(e -> {
-            //start nyt vindue
             Player winner = findWinner();
             hostRoundWinnerWindow(winner);
             for (PlayerHandler player : players)
-                player.getOut().println("winnerround:"+winner.getUsername()+winner.getCurrentAnswer());
+                player.getOut().println("winnerround:"+winner.getUsername()+":"+winner.getCurrentAnswer());
             });
         hostFrame.add(seeWinnerOfThisRound);
         hostFrame.add(gamePanel);
@@ -331,10 +331,12 @@ public class GameManager {
         JLabel winnerAnnouncer = new JLabel("Winner of the round is: " +winner.getUsername()+" with the sentence: " + winner.currentAnswer);
         gamePanel.add(winnerAnnouncer);
         JButton startNextRound = new JButton("Start næste runde");
-        //startNextRound.addActionListener(e -> {
-            //start nyt vindue
+        startNextRound.addActionListener(e -> {
+            hostGameWindow();
+            for(PlayerHandler player : players)
+                player.getOut().println("startgame:");
 
-        //});
+        });
         hostFrame.add(startNextRound);
         hostFrame.add(gamePanel);
         hostFrame.revalidate();

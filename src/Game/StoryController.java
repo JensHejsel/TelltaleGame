@@ -99,7 +99,8 @@ public class StoryController {
     }
 	public void setWinningAnswer(String answer){
 		currentStory += answer;
-		String newAnswer = answer.replaceAll(currentLine, "").strip();
+		System.out.println(currentLine);
+		String newAnswer = answer.replaceAll(currentLine.replace("__________",""), "").strip();
 		switch (storyState) {
 			case 1 -> name = newAnswer;
 			case 3 -> lokation = newAnswer;
