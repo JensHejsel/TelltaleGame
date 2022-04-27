@@ -297,7 +297,7 @@ public class GameManager {
             hostRoundWinnerWindow(winner);
             for (PlayerHandler player : players)
                 player.getOut().println("winnerround:"+winner.getUsername()+winner.getCurrentAnswer());
-        });
+            });
         hostFrame.add(seeWinnerOfThisRound);
         hostFrame.add(gamePanel);
         hostFrame.revalidate();
