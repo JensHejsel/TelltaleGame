@@ -250,8 +250,8 @@ public class GameManager {
             combinedPlayerAnswers = "";
             for (PlayerHandler player : players)
                 combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
-
-            serverConn.getOut().println("startvoting:" + hostPlayer.getCurrentAnswer() + combinedPlayerAnswers);
+            for (PlayerHandler player : players)
+                player.getOut().println("startvoting:" + hostPlayer.getCurrentAnswer() + combinedPlayerAnswers);
         });
         JLabel unfinishedSentence = new JLabel(nextLine);
         hostFrame.add(gamePanel);
