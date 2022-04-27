@@ -35,7 +35,6 @@ public class PlayerHandler implements Runnable {
                         //System.out.println(input.split(":", 0)[1].replace(":", "") + " | " + x.getPlayer().getUsername());
                         if (input.split(":", 0)[1].replace(":", "").equals(x.getPlayer().getUsername())) {
                             x.getPlayer().setCurrentAnswer(input.split(":", 0)[2]);
-                            System.out.println(x.getPlayer().getCurrentAnswer());
                             break;
                         }
                     }

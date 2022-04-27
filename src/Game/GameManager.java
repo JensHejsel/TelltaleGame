@@ -373,24 +373,31 @@ public class GameManager {
     }
     private Player findWinner(){
         Player winner = null;
+        String combinnedVotes = hostPlayer.getCurrentVote();
+        for(PlayerHandler player : players){
+            combinnedVotes += player.getPlayer().getCurrentVote();
+        }
         int votesForRightAnswer = 0;
         for (PlayerHandler player : players){
             int index = 0;
             int currentVotes =0;
-            while((index = combinedPlayerAnswers.indexOf(player.getPlayer().getCurrentAnswer(),index)) != -1){
+            while((index = combinnedVotes.indexOf(player.getPlayer().getCurrentAnswer(),index)) != -1){
                 currentVotes++;
                 index+=player.getPlayer().getCurrentAnswer().length();
             }
+            System.out.println(currentVotes);
             if (currentVotes > votesForRightAnswer){
                 winner = player.getPlayer();
+                votesForRightAnswer = currentVotes;
             }
         }
         int index = 0;
         int currentVotes =0;
-        while((index = combinedPlayerAnswers.indexOf(hostPlayer.getCurrentAnswer(),index)) != -1){
+        while((index = combinnedVotes.indexOf(hostPlayer.getCurrentAnswer(),index)) != -1){
             currentVotes++;
             index+=hostPlayer.getCurrentAnswer().length();
         }
+        System.out.println(currentVotes);
         if(currentVotes > votesForRightAnswer){
             winner = hostPlayer;
         }
