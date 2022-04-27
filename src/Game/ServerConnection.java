@@ -46,6 +46,7 @@ public class ServerConnection implements Runnable {
                     }
                     else if(input.startsWith("winnerround")){
                         String[] inputSplit = input.split(":",0);
+                        System.out.println(inputSplit);
                         gameManager.joinRoundWinnerWindow(inputSplit[1].replace(":",""),inputSplit[2].replace(":",""));
                     }
                 }

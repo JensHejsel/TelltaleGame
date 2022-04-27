@@ -325,7 +325,6 @@ public class GameManager {
     }
 
     private void hostRoundWinnerWindow(Player winner){
-        System.out.println("igethere");
         hostFrame.getContentPane().removeAll();
         JPanel gamePanel = new JPanel();
         hostFrame.setMinimumSize(new Dimension(1000, 1000));
@@ -389,7 +388,6 @@ public class GameManager {
         while((index = combinedPlayerAnswers.indexOf(hostPlayer.getCurrentVote(),index)) != -1){
             currentVotes++;
             index+=hostPlayer.getCurrentVote().length();
-            System.out.println("imtrapped");
         }
         if(currentVotes > votesForRightAnswer){
             winner = hostPlayer;
