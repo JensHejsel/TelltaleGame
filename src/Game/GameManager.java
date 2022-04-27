@@ -235,35 +235,39 @@ public class GameManager {
     }
     private void hostGameWindow(){
         String nextLine = storyController.getNextLine();
-        for (PlayerHandler playerHandler : players)
-            playerHandler.getOut().println("nextLine:" + nextLine);
+        if(nextLine.equals("endOfStory")){
+            hostEndGameWindow();
+        }else {
+            for (PlayerHandler playerHandler : players)
+                playerHandler.getOut().println("nextLine:" + nextLine);
 
-        hostFrame.getContentPane().removeAll();
-        JPanel gamePanel = new JPanel();
-        hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
-        hostFrame.setMinimumSize(new Dimension(1000, 1000));
-        JButton sendSentence = new JButton("Indsæt ord");
-        sendSentence.addActionListener(e -> hostInput());
-        JButton startVoting = new JButton("Start afstemning");
-        startVoting.addActionListener(e -> {
-            hostVotingWindow();
-            combinedPlayerAnswers = "";
-            combinedPlayerAnswers+= hostPlayer.getCurrentAnswer();
-            for (PlayerHandler player : players)
-                combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
-            for (PlayerHandler player : players)
-                player.getOut().println("startvoting:" + combinedPlayerAnswers);
+            hostFrame.getContentPane().removeAll();
+            JPanel gamePanel = new JPanel();
+            hostFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 300));
+            hostFrame.setMinimumSize(new Dimension(1000, 1000));
+            JButton sendSentence = new JButton("Indsæt ord");
+            sendSentence.addActionListener(e -> hostInput());
+            JButton startVoting = new JButton("Start afstemning");
+            startVoting.addActionListener(e -> {
+                hostVotingWindow();
+                combinedPlayerAnswers = "";
+                combinedPlayerAnswers += hostPlayer.getCurrentAnswer();
+                for (PlayerHandler player : players)
+                    combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
+                for (PlayerHandler player : players)
+                    player.getOut().println("startvoting:" + combinedPlayerAnswers);
 
 
-        });
-        JLabel unfinishedSentence = new JLabel(nextLine);
-        hostFrame.add(gamePanel);
-        hostFrame.add(unfinishedSentence);
-        hostFrame.add(userInput);
-        hostFrame.add(sendSentence);
-        hostFrame.add(startVoting);
-        hostFrame.revalidate();
-        hostFrame.repaint();
+            });
+            JLabel unfinishedSentence = new JLabel(nextLine);
+            hostFrame.add(gamePanel);
+            hostFrame.add(unfinishedSentence);
+            hostFrame.add(userInput);
+            hostFrame.add(sendSentence);
+            hostFrame.add(startVoting);
+            hostFrame.revalidate();
+            hostFrame.repaint();
+        }
     }
     public void joinGameWindow(){
         joinFrame.getContentPane().removeAll();
@@ -352,6 +356,34 @@ public class GameManager {
         joinFrame.revalidate();
         joinFrame.repaint();
     }
+
+    public void hostEndGameWindow(){
+        Player grandWinner = hostPlayer;
+        for(PlayerHandler player : players){
+            if(player.getPlayer().getPoints() > grandWinner.getPoints()){
+                grandWinner = player.getPlayer();
+            }
+        }
+        for (PlayerHandler playerHandler : players){
+            playerHandler.getOut().println("endgame:"+grandWinner.getUsername() + ":"+ storyController.getFullStory());
+        }
+
+        hostFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        BoxLayout boxLayout = new BoxLayout(gamePanel, Y_AXIS);
+        gamePanel.setLayout(boxLayout);
+        JLabel winnerAnnouncer = new JLabel("The Winner is:");
+        JLabel winner = new JLabel(grandWinner.getUsername());
+        JLabel storyAnnouncer = new JLabel("The full story:");
+        JLabel fullStory = new JLabel(storyController.getFullStory());
+        joinFrame.add(winnerAnnouncer);
+        joinFrame.add(winner);
+        joinFrame.add(storyAnnouncer);
+        joinFrame.add(fullStory);
+        joinFrame.revalidate();
+        joinFrame.repaint();
+    }
+
 
     private void hostInput() {
         hostPlayer.setCurrentAnswer(storyController.setVotedAnswer(userInput.getText()));

@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class StoryController {
 	private Random randGene = new Random();
-	private String currentStory = "";
+	private String currentStory = "<html>";
 	private String currentLine ="";
 	private int storyState = 0; 
 	private String name = "Jens";
@@ -79,9 +79,11 @@ public class StoryController {
     			storyState++;
     			return findNextLine(ninethPart);
     		case 9:
-    			storyState = 0;
+    			storyState++;
     			return findNextLine(tenthPart);
-    		default:
+			case 10:
+				return "endOfStory";
+			default:
     			return null;
     	}
     }
@@ -98,7 +100,7 @@ public class StoryController {
 		return currentLine.replace("__________",answer);
     }
 	public void setWinningAnswer(String answer){
-		currentStory += answer;
+		currentStory += answer+ "<br>";
 		System.out.println(currentLine);
 		String newAnswer = answer.replaceAll(currentLine.replace("__________",""), "").strip();
 		switch (storyState) {

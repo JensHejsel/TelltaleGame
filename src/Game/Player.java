@@ -35,4 +35,6 @@ public class Player {
     public void awardWinner(){
         this.points++;
     }
+    public int getPoints(){ return points;
+    }
 }
