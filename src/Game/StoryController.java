@@ -8,7 +8,7 @@ public class StoryController {
 	private Random randGene = new Random();
 	private String currentStory = "<html>";
 	private String currentLine ="";
-	private int storyState = 0; 
+	private int storyState = 0;
 	private String name = "Jens";
     private String lokation = "Din mor";
     private String enemy = "Pikachu";
@@ -82,6 +82,7 @@ public class StoryController {
     			storyState++;
     			return findNextLine(tenthPart);
 			case 10:
+				currentLine = "endOfStory";
 				return "endOfStory";
 			default:
     			return null;
@@ -115,5 +116,9 @@ public class StoryController {
 
 	public void updateCurrentLine(String newCurrentLine){
 		currentLine = newCurrentLine;
+	}
+
+	public String getCurrentLine() {
+		return currentLine;
 	}
 }

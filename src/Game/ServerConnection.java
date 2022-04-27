@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ServerConnection implements Runnable {
 
@@ -32,22 +33,33 @@ public class ServerConnection implements Runnable {
                     String input = in.readLine();
 
                     if (input.startsWith("nextLine:")){
+                        System.out.print("nextline blev kaldt");
                         nextLine = input.split(":",0)[1];
                         gameManager.storyController.updateCurrentLine(nextLine);
                     }
                     else if (input.startsWith("startgame")) {
+                        System.out.print("startgame blev kaldt");
                         gameManager.joinGameWindow();
                     }
                     else if (input.startsWith("startvoting")) {
+                        System.out.print("startvoting blev kaldt");
                         gameManager.joinVotingWindow(input.replace("startvoting:", ""));
                     }
                     else if (input.startsWith("winningAnswer")) {
+                        System.out.print("winningAnswer blev kaldt");
                         gameManager.storyController.setWinningAnswer(input.replace("winningAnswer:",""));
                     }
                     else if(input.startsWith("winnerround")){
+                        System.out.print("winnerround blev kaldt");
                         String[] inputSplit = input.split(":",0);
-                        System.out.println(inputSplit);
+                        //System.out.println(inputSplit);
                         gameManager.joinRoundWinnerWindow(inputSplit[1].replace(":",""),inputSplit[2].replace(":",""));
+                    }
+                    else if(input.startsWith("endgame")) {
+                        System.out.print("endgame blev kaldt");
+                        String[] inputSplit = input.split(":", 0);
+                        System.out.println(Arrays.toString(inputSplit));
+                        gameManager.joinEndGameWindow(inputSplit[1].replace(":", ""), inputSplit[2].replace(":", ""));
                     }
                 }
             } catch (IOException e) {

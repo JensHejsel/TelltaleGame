@@ -20,6 +20,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.io.*;
 import java.net.*;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -47,6 +48,7 @@ public class GameManager {
     private PrintWriter out;
     private BufferedReader in;
     boolean gameHasStarted = false;
+    Player grandWinner;
 
     private static ArrayList<PlayerHandler> players = new ArrayList<PlayerHandler>();
 
@@ -235,6 +237,8 @@ public class GameManager {
     }
     private void hostGameWindow(){
         String nextLine = storyController.getNextLine();
+        System.out.println("hostGameWindow siger at nextline er " + nextLine);
+        System.out.println("hostGameWindow siger at currentline er " + storyController.getCurrentLine());
         if(nextLine.equals("endOfStory")){
             hostEndGameWindow();
         }else {
@@ -256,15 +260,13 @@ public class GameManager {
                     combinedPlayerAnswers += ":" + player.getPlayer().getCurrentAnswer();
                 for (PlayerHandler player : players)
                     player.getOut().println("startvoting:" + combinedPlayerAnswers);
-
-
             });
             JLabel unfinishedSentence = new JLabel(nextLine);
+            gamePanel.add(unfinishedSentence);
+            gamePanel.add(userInput);
+            gamePanel.add(sendSentence);
+            gamePanel.add(startVoting);
             hostFrame.add(gamePanel);
-            hostFrame.add(unfinishedSentence);
-            hostFrame.add(userInput);
-            hostFrame.add(sendSentence);
-            hostFrame.add(startVoting);
             hostFrame.revalidate();
             hostFrame.repaint();
         }
@@ -278,10 +280,10 @@ public class GameManager {
         sendSentence.addActionListener(listener -> userInput());
         JLabel unfinishedSentence = new JLabel(serverConn.getNextLine());
         sendSentence.addActionListener(e -> userInput());
+        gamePanel.add(unfinishedSentence);
+        gamePanel.add(userInput);
+        gamePanel.add(sendSentence);
         joinFrame.add(gamePanel);
-        joinFrame.add(unfinishedSentence);
-        joinFrame.add(userInput);
-        joinFrame.add(sendSentence);
         joinFrame.revalidate();
         joinFrame.repaint();
     }
@@ -337,9 +339,10 @@ public class GameManager {
         JButton startNextRound = new JButton("Start næste runde");
         startNextRound.addActionListener(e -> {
             hostGameWindow();
-            for(PlayerHandler player : players)
-                player.getOut().println("startgame:");
-
+            System.out.println("hostRoundWinnerWindow siger at currentLine er " + storyController.getCurrentLine());
+            if (!Objects.equals(storyController.getCurrentLine(), "endOfStory"))
+                for(PlayerHandler player : players)
+                    player.getOut().println("startgame:");
         });
         hostFrame.add(startNextRound);
         hostFrame.add(gamePanel);
@@ -358,7 +361,7 @@ public class GameManager {
     }
 
     public void hostEndGameWindow(){
-        Player grandWinner = hostPlayer;
+        grandWinner = hostPlayer;
         for(PlayerHandler player : players){
             if(player.getPlayer().getPoints() > grandWinner.getPoints()){
                 grandWinner = player.getPlayer();
@@ -376,10 +379,29 @@ public class GameManager {
         JLabel winner = new JLabel(grandWinner.getUsername());
         JLabel storyAnnouncer = new JLabel("The full story:");
         JLabel fullStory = new JLabel(storyController.getFullStory());
-        joinFrame.add(winnerAnnouncer);
-        joinFrame.add(winner);
-        joinFrame.add(storyAnnouncer);
-        joinFrame.add(fullStory);
+        gamePanel.add(winnerAnnouncer);
+        gamePanel.add(winner);
+        gamePanel.add(storyAnnouncer);
+        gamePanel.add(fullStory);
+        hostFrame.add(gamePanel);
+        hostFrame.revalidate();
+        hostFrame.repaint();
+    }
+
+    public void joinEndGameWindow(String winnerUsername, String fullStory) {
+        joinFrame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        BoxLayout boxLayout = new BoxLayout(gamePanel, Y_AXIS);
+        gamePanel.setLayout(boxLayout);
+        JLabel winnerAnnouncer = new JLabel("The Winner is:");
+        JLabel winner = new JLabel(winnerUsername);
+        JLabel storyAnnouncer = new JLabel("The full story:");
+        JLabel fullStoryLabel = new JLabel(fullStory);
+        gamePanel.add(winnerAnnouncer);
+        gamePanel.add(winner);
+        gamePanel.add(storyAnnouncer);
+        gamePanel.add(fullStoryLabel);
+        joinFrame.add(gamePanel);
         joinFrame.revalidate();
         joinFrame.repaint();
     }
