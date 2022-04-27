@@ -103,11 +103,13 @@ public class StoryController {
 	public void setWinningAnswer(String answer){
 		currentStory += answer+ "<br>";
 		System.out.println(currentLine);
-		String newAnswer = answer.replaceAll(currentLine.replace("__________",""), "").strip();
+		String newAnswer = answer.substring(currentLine.indexOf("_"));
+
+		System.out.println(newAnswer);
 		switch (storyState) {
-			case 1 -> name = newAnswer;
-			case 3 -> lokation = newAnswer;
-			case 5 -> enemy = newAnswer;
+			case 1 -> name = newAnswer.replace(currentLine.substring(currentLine.lastIndexOf("_")+1),"");
+			case 3 -> lokation = newAnswer.replace(currentLine.substring(currentLine.lastIndexOf("_")+1),"");
+			case 5 -> enemy = newAnswer.replace(currentLine.substring(currentLine.lastIndexOf("_")+1),"");
 		}
 	}
     public String getFullStory() {
